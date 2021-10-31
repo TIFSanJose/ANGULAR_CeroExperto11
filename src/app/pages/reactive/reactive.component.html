@@ -1,0 +1,199 @@
+<h4>Formularios <small> Reactive </small></h4>
+<hr>
+<form autocomplete="off" [formGroup]="forma" (ngSubmit)='guardar()'>
+
+  <div>
+    <!-- campo Nombre con error -->
+    <div class="form-group row" >
+      <label class="col-2 col-form-label">Nombre</label>
+        <div class="col m-1">
+
+          <input class="form-control"
+              type="text"
+              placeholder="Nombre"
+              formControlName="nombre"
+              [class.is-invalid] = "campoNoValido('nombre')" 
+              > 
+
+
+        <small class="text-danger" *ngIf="campoNoValido('nombre')"> completar </small>
+      </div>
+    </div>
+    
+    <!-- campo Apellido -->
+
+    <div class="form-group row">
+      <label  
+              class="col-2 col-form-label">Apellido</label>
+        <div class="col m-1">
+
+          <input class="form-control"
+              type="text"
+              placeholder="Apellido"
+              formControlName="apellido"
+              [class.is-invalid] = "campoNoValido('apellido')" 
+              >
+              <small class="text-danger" *ngIf="campoNoValido('apellido')"> completar </small>
+            </div>
+    </div>
+
+    <div class="form-group row">
+      <label  
+              class="col-2 col-form-label">usuario</label>
+        <div class="col m-1">
+
+          <input class="form-control"
+              type="text"
+              placeholder="usuario"
+              formControlName="usuario"
+              [class.is-invalid] = "campoNoValido('usuario')" 
+              >
+              <small class="text-danger" *ngIf="campoNoValido('usuario')"> completar </small>
+            </div>
+    </div>
+</div>
+
+  <div class="form-group row">
+    <label class="col-2 col-form-label">Correo</label>
+    <div class="col m-1">
+
+      <input 
+        class="form-control"
+        type="email"
+        placeholder="Correo electrónico"
+        formControlName="correo"
+        [class.is-invalid] = "campoNoValido('correo')" >
+
+        <small class="text-danger" *ngIf="campoNoValido('correo')"> completar </small>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label class="col-2 col-form-label">contrasenia1</label>
+    <div class="col m-1">
+
+      <input 
+        class="form-control"
+        type="password"
+        placeholder="contrasenia"
+        formControlName="pass1"
+        [class.is-invalid] = "campoNoValido('pass1')" >
+
+        <small class="text-danger" *ngIf="campoNoValido('contrasenia1')"> completar </small>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label class="col-2 col-form-label">contrasenia2</label>
+    <div class="col m-1">
+
+      <input 
+        class="form-control"
+        type="password"
+        placeholder="repita"
+        formControlName="pass2"
+        [class.is-invalid] = "passNoIdenticas()" >
+
+        <small class="text-danger" *ngIf="campoNoValido('contrasenia2')"> completar </small>
+    </div>
+  </div>
+
+
+  <div class="form-group row" formGroupName="direccion" >
+    <label class="col-2 col-form-label"> Direccion </label>
+    <div class=" form-col row">
+
+      <div class="col ">
+        <input 
+          type       = "text" 
+          class      = "form-control"
+          placeholder= "ciudad"
+          formControlName = "ciudad"       
+          [class.is-invalid] = "direccionNoValida( 'ciudad' )" >
+      </div>
+
+      <div class="col">
+        <input 
+          type       = "text" 
+          class      = "form-control"
+          placeholder= "calle"    
+          formControlName = "calle"       
+          [class.is-invalid] = "direccionNoValida( 'calle' )" >
+      </div>
+
+
+    </div>
+  </div>
+
+
+  <div class="row" >
+    <div class="col">
+      <table class="table">
+        <thead class="thead-dark">
+          <tr >
+            <th>ID</th>
+            <th>PasaTiempo</th>
+            <th>Borra</th>
+          </tr>
+        </thead>
+        <tbody formArrayName='pasatiempos' >
+          <tr *ngFor="control of pasatiempos.controls, let i=index" >
+            <td> {{ i+1 }} </td>
+            <td>
+              <input  type="text" 
+                      class="from-control col-12"
+                      [formControlName]='i'            >
+            </td>
+            <td>
+              <button type="button"
+                      class="btn btn-danger"
+                      (click)="borrarPasatiempo(i)"
+                        > Borrar </button>
+            </td>
+          </tr>
+        </tbody>
+        </table>
+
+        <div class="form-group row">
+          <button type="button"
+                  class=" btn 
+                          btn-primary 
+                          btn-block 
+                          mt-3 
+                          mb-5
+                          row-12"
+                  (click)="agregarPasatiempo()"
+                  > + Agregar  </button>
+        </div>
+    </div>
+  </div>
+
+
+  <div class="form-group row m-2  ">
+    <label class="col-2 col-form-label">&nbsp;</label>
+    <div class=" from-col row">
+      <button type="submit" class="btn btn-outline-primary btn-block">
+        Guardar
+      </button>
+    </div>
+  </div>
+
+</form>
+
+
+<hr>
+
+<div class="container">
+  <pre>
+    Estado del Form: {{ forma.status }}  
+  </pre>
+  <br>
+  <pre>
+    Es valido el Fromulario : {{ forma.valid }}
+  </pre>
+  <pre>
+    Valores del Form: {{ forma.value | json }}
+  </pre>
+
+
+</div>
